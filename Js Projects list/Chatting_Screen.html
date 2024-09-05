@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatting Screen</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            background-color: #e1f5fe;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 10px;
+        }
+
+        .chat-box {
+            background: linear-gradient(to bottom right, #a8ef99, #caeaa0);
+            display: flex;
+            flex-direction: column;
+            width: 500px;
+            height: 550px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .header {
+            background-color: #1ac499;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .name {
+            font-size: 20px;
+            color: #fff;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        .pack {
+            margin-left: auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .pack img {
+            height: 30px;
+            width: 30px;
+            cursor: pointer;
+            filter: invert(100%);
+        }
+
+        #chatingscreen,
+        #chatingscreen1 {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #eceff1;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        .footer {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #ffffff;
+            border-top: 2px solid #ccc;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        input {
+            flex: 1;
+            height: 34px;
+            padding: 0 15px;
+            border-radius: 20px;
+            border: 2px solid #ccc;
+            margin-right: 10px;
+            /* outline: none; */
+            width: 330px;
+            font-size: 16px;
+        }
+
+        .icons img {
+            height: 30px;
+            width: 30px;
+            cursor: pointer;
+        }
+
+        li {
+            list-style: none;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 20px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .sender {
+            background-color: #b4ff69;
+            margin-left: auto;
+            text-align: right;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+         /* .receiver {
+            border: 2px solid red;
+            background-color: #86eaf5;
+            text-align: left;
+            display: flex;
+            text-align: center;
+            margin: auto;
+            flex-direction:row;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);;
+        } */
+
+        /* .message-img {
+            height: 15px;
+            width: 14px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }  */
+        .receiver {
+    background-color: #86eaf5;
+    text-align: left;
+    display: flex;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    /* padding-left: 50px; */
+    border-radius: 20px;
+    left: 35px;
+    /* border: 2px solid red; */
+}
+
+.message-img {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    position: absolute;
+    left: -35px;
+    top: 10px;
+}
+
+
+        .time {
+            font-size: 12px;
+            color: #888;
+            display: flex;
+            align-items: end;
+        }
+
+        .time1 {
+            font-size: 12px;
+            color: #888;
+            margin-left: 210px;
+            display: flex;
+            align-items: end;
+        }
+
+        .emoji-pack,
+        .emoji-pack1 {
+            visibility: hidden;
+            padding: 5px;
+            background-color: #fff;
+            border-top: 2px solid #ccc;
+            gap: 10px;
+            justify-content: space-around;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10%;
+            position: absolute;
+            height: 150px;
+            width: 170px;
+        }
+
+        .emoji-pack {
+            top: 350px;
+            left: 400px;
+        }
+
+        .emoji-pack1 {
+            top: 350px;
+            right: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="emoji-pack">
+        <span onclick="addEmoji('😊')">😊</span>
+        <span onclick="addEmoji('😂')">😂</span>
+        <span onclick="addEmoji('😍')">😍</span>
+        <span onclick="addEmoji('😎')">😎</span>
+        <span onclick="addEmoji('😘')">😘</span>
+        <span onclick="addEmoji('🤔')">🤔</span>
+        <span onclick="addEmoji('😋')">😋</span>
+        <span onclick="addEmoji('😜')">😜</span>
+        <span onclick="addEmoji('😅')">😅</span>
+        <span onclick="addEmoji('😇')">😇</span>
+        <span onclick="addEmoji('😏')">😏</span>
+        <span onclick="addEmoji('😭')">😭</span>
+        <span onclick="addEmoji('😡')">😡</span>
+        <span onclick="addEmoji('😱')">😱</span>
+        <span onclick="addEmoji('🤗')">🤗</span>
+        <span onclick="addEmoji('😴')">😴</span>
+        <span onclick="addEmoji('🙄')">🙄</span>
+        <span onclick="addEmoji('😩')">😩</span>
+        <span onclick="addEmoji('😜')">😜</span>
+        <span onclick="addEmoji('😝')">😝</span>
+        <span onclick="addEmoji('😶')">😶</span>
+        <span onclick="addEmoji('😎')">😎</span>
+        <span onclick="addEmoji('😍')">😍</span>
+        <span onclick="addEmoji('😊')">😊</span>
+        <span onclick="addEmoji('😇')">😇</span>
+
+    </div>
+    <div class="container">
+        <div class="chat-box">
+            <div class="header">
+                <img class="img"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2mx-K89XyFbxK9oOlbsUxuJDsrhvzmjax0g&s"
+                    alt="Profile Picture">
+                <div>
+                    <p class="name">Mohib Chaudary</p>
+                </div>
+                <div class="pack">
+                    <img class="videoicon" onclick="call()" src="https://img.icons8.com/ios/50/FFFFFF/video-call.png"
+                        alt="Video Call" />
+                    <img class="call" onclick="call()" src="https://img.icons8.com/ios/50/FFFFFF/phone--v1.png"
+                        alt="Phone" />
+                    <img class="Menu" onclick="menu()"
+                        src="https://img.icons8.com/sf-black-filled/64/FFFFFF/menu-2.png" alt="Menu" />
+                </div>
+            </div>
+            <ul id="chatingscreen"></ul>
+            <div class="footer">
+               <form action="" onsubmit=" return send();"> <input placeholder="Type a message" id="textarea"></form>
+                <div class="icons">
+                    <img class="emoji" onclick="emoji()" src="https://img.icons8.com/ios/50/lol--v1.png" alt="Emoji" />
+                    <a href="#"  onclick="send()">
+                        <img class="mic"
+                            src="https://img.icons8.com/external-outline-lafs/64/external-ic_multi_sender-crosschain-outline-lafs.png"
+                            alt="Send" />
+                    </a>
+                    <img class="camera" onclick="camera()"
+                        src="https://img.icons8.com/fluency-systems-regular/50/camera--v1.png">
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-box">
+            <div class="header">
+                <img class="img" src="https://cdn.pixabay.com/photo/2024/07/04/08/48/swing-8872109_960_720.jpg"
+                    alt="Profile Picture">
+                <div>
+                    <p class="name">Tayyab Saleem</p>
+                </div>
+                <div class="pack">
+                    <img class="videoicon" onclick="call()" src="https://img.icons8.com/ios/50/FFFFFF/video-call.png"
+                        alt="Video Call" />
+                    <img class="call" onclick="call()" src="https://img.icons8.com/ios/50/FFFFFF/phone--v1.png"
+                        alt="Phone" />
+                    <img class="menu" onclick="menu2()"
+                        src="https://img.icons8.com/sf-black-filled/64/FFFFFF/menu-2.png" alt="Menu" />
+                </div>
+            </div>
+            <ul id="chatingscreen1"></ul>
+            <div class="footer">
+              <form action="" onsubmit="return send1();">  <input placeholder="Type a message" id="textarea1"></form>
+                <div class="icons">
+                    <img class="emoji" onclick="emoji1()" src="https://img.icons8.com/ios/50/lol--v1.png">
+                    <a href="#"  onclick="send1()">
+                        <img class="mic"
+                            src="https://img.icons8.com/external-outline-lafs/64/external-ic_multi_sender-crosschain-outline-lafs.png">
+                    </a>
+                    <img class="camera" onclick="camera()"
+                        src="https://img.icons8.com/fluency-systems-regular/50/camera--v1.png">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="emoji-pack1">
+        <span onclick="addEmoji1('😊')">😊</span>
+        <span onclick="addEmoji1('😂')">😂</span>
+        <span onclick="addEmoji1('😍')">😍</span>
+        <span onclick="addEmoji1('😎')">😎</span>
+        <span onclick="addEmoji1('😘')">😘</span>
+        <span onclick="addEmoji1('🤔')">🤔</span>
+        <span onclick="addEmoji1('😋')">😋</span>
+        <span onclick="addEmoji1('😜')">😜</span>
+        <span onclick="addEmoji1('😅')">😅</span>
+        <span onclick="addEmoji1('😇')">😇</span>
+        <span onclick="addEmoji1('😏')">😏</span>
+        <span onclick="addEmoji1('😭')">😭</span>
+        <span onclick="addEmoji1('😡')">😡</span>
+        <span onclick="addEmoji1('😱')">😱</span>
+        <span onclick="addEmoji1('🤗')">🤗</span>
+        <span onclick="addEmoji1('😴')">😴</span>
+        <span onclick="addEmoji1('🙄')">🙄</span>
+        <span onclick="addEmoji1('😩')">😩</span>
+        <span onclick="addEmoji1('😜')">😜</span>
+        <span onclick="addEmoji1('😝')">😝</span>
+        <span onclick="addEmoji1('😶')">😶</span>
+        <span onclick="addEmoji1('😎')">😎</span>
+        <span onclick="addEmoji1('😍')">😍</span>
+        <span onclick="addEmoji1('😊')">😊</span>
+        <span onclick="addEmoji1('😇')">😇</span>
+    </div>
+
+    <script>
+       
+        // function send() {
+        //     let a = document.getElementById("textarea").value;
+        //     if (a.trim() !== "") {
+        //         let time = getCurrentTime();
+        //         document.getElementById("chatingscreen").innerHTML +=
+        //             "<li class='sender'>" + a +
+        //             "<span class='time'>" + time + "</span></li>";
+        //         document.getElementById("chatingscreen1").innerHTML +=
+        //             "<li class='receiver'><img class='message-img' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2mx-K89XyFbxK9oOlbsUxuJDsrhvzmjax0g&s'>"
+        //             + a + "<span class='time1'>" + time + "</span></li>";
+        //         document.getElementById("textarea").value = "";
+        //     }
+        // }
+
+
+
+
+        function send() {
+            let date = new Date()
+            let hours = date.getHours()
+            let minutes = date.getMinutes()
+
+            let ampm = hours >= 12 ? "PM" : "AM"
+
+            hours = hours % 12
+          if(hours===0){
+            hours=12
+          }
+        
+            minutes = minutes < 10 ? "0" + minutes : minutes
+
+
+            let time = hours + ":" + minutes + " " + ampm;
+
+            let a = document.getElementById("textarea").value;
+            if (a.trim() !== "") {
+                document.getElementById("chatingscreen").innerHTML +=
+                    "<li class='sender'>" + a +
+                    "<span class='time'>" + time + "</span></li>";
+
+                document.getElementById("chatingscreen1").innerHTML +=
+                    "<li class='receiver'>  <img class='message-img' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2mx-K89XyFbxK9oOlbsUxuJDsrhvzmjax0g&s'>"
+                    + a + "<span class='time1'>" + time + "</span></li>";
+                document.getElementById("textarea").value = "";
+
+            }
+            return false
+        }
+
+       
+
+
+        function send1() {
+            let date = new Date()
+            let hours = date.getHours()
+            let minutes = date.getMinutes()
+
+            let ampm = hours >= 12 ? "PM" : "AM"
+
+            hours = hours % 12
+            if(hours===0){
+            hours=12
+          }
+            minutes = minutes < 10 ? "0" + minutes : minutes
+
+
+            let time = hours + ":" + minutes + " " + ampm;
+
+            let a = document.getElementById("textarea1").value;
+            if (a.trim() !== "") {
+                document.getElementById("chatingscreen1").innerHTML +=
+                    "<li class='sender'>" + a +
+                    "<span class='time'>" + time + "</span></li>";
+
+                document.getElementById("chatingscreen").innerHTML +=
+                    "<li class='receiver'><img class='message-img' src='https://cdn.pixabay.com/photo/2024/07/04/08/48/swing-8872109_960_720.jpg'>"
+                    + a + "<span class='time1'>" + time + "</span></li>";
+                document.getElementById("textarea1").value = "";
+
+            }
+            return false
+        }
+        function menu() {
+            if (confirm("Are You Sure to Clear chat") === true) {
+                document.getElementById("chatingscreen").innerHTML = " "
+            } else {
+                alert("Do not clearchat");
+            }
+        }
+
+        function menu2() {
+            if (confirm("Are You Sure to Clear chat") === true) {
+                document.getElementById("chatingscreen1").innerHTML = " "
+            } else {
+                alert("Do not clearchat");
+            }
+        }
+        function call() {
+            alert("Don't Allow In Web. Download the App to call")
+        }
+        function camera() {
+            confirm("Allow Camera From Setting")
+        }
+        // function emoji() {      
+        //     let a=document.getElementsByClassName("emoji-pack")
+        //     a[0].style.display="flex"
+        // }
+
+        function addEmoji(emoji) {
+            let textarea = document.getElementById('textarea');
+            textarea.value += emoji
+        }
+        // function emoji1() {      
+        //     let a=document.getElementsByClassName("emoji-pack1")
+        //     a[0].style.display="flex"
+        // }
+
+        function addEmoji1(emoji) {
+            let textarea = document.getElementById('textarea1');
+            textarea.value += emoji
+        }
+
+
+
+        function emoji() {
+            let comment = document.getElementsByClassName("emoji-pack")[0]
+            if (comment.style.visibility === "hidden") {
+                comment.style.visibility = "visible";
+
+            } else {
+                comment.style.visibility = "hidden";
+            }
+        }
+        function emoji1() {
+            let comment = document.getElementsByClassName("emoji-pack1")[0]
+            if (comment.style.visibility === "hidden") {
+                comment.style.visibility = "visible";
+
+            } else {
+                comment.style.visibility = "hidden";
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Slip</title>
+</head>
+
+<style>
+    body {
+        background-image: url("https://cdn.pixabay.com/photo/2023/06/07/16/18/vietnam-8047523_1280.jpg");
+    }
+
+    .container {
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    input,
+    select {
+        width: 330px;
+        padding: 5px;
+        margin-bottom: 10px;
+        background-color: white;
+        cursor: pointer;
+    }
+
+    .container2 {
+        padding: 10px;
+        display: none;
+        justify-content: space-around;
+        width: 60%;
+    }
+
+    .container3 {
+        width: 30%;
+        background-color: rgba(218, 216, 216, 0.869);
+        border-radius: 40px;
+        padding: 10px;
+    }
+
+    .two {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .Final {
+        border-top: 2px solid black;
+    }
+
+    .main {
+        display: flex;
+        justify-content: space-around;
+    }
+    .container3{
+        /* display: none; */
+        display: flex;
+        justify-content: space-evenly;
+        visibility: hidden;
+    }
+    button{
+        cursor: pointer;
+        width: 100px;
+    }
+    button:hover{
+        background-color: rgba(141, 137, 137, 0.492);
+    }
+
+</style>
+
+<body>
+    <div class="main">
+        <div class="container">
+            <h3>INVENTORY MANAGEMENT SYSTEM</h3>
+            <form id="form">
+                <div>PRODUCT NAME</div>
+                <select id="productName" required onclick="Price()">
+                    <option value="">SELECT ANY ITEM</option>
+                    <option value="40">Biscuit</option>
+                    <option value="50">Nimko</option>
+                    <option value="100">Juice</option>
+                    <option value="120">Bottle</option>
+                    <option value="80">Chips</option>
+                    <option value="200">Chiken noodle</option>
+                    <option value="400">Pasta</option>
+                    <option value="800">Cake</option>
+                    <option value="1200">Pizza</option>
+                    <option value="850">Sweets</option>
+                    <option value="110">Cans</option>
+                </select>
+
+                <div>PRICE</div>
+                <input type="number" id="price" placeholder="PRICE" required readonly>
+                <div>QUANTITY</div>
+                <input type="number" min="1" id="quantity" onclick="ab()" placeholder="QUANTITY" required>
+                <div>TOTAL AMOUNT</div>
+                <input type="number" id="amount" placeholder="AMOUNT" required readonly>
+                <div style="display: flex; justify-content: center; padding: 10px;">
+                    <button type="button" onclick="add()">ADD</button>
+                </div>
+            </form>
+        </div>
+        <div class="container3">
+            <div class="Total">
+                <h2>Total : </h2>
+                <h4 id="Total-Amount">0</h4>
+            </div>
+            <div id="Discount">
+                <h2>Discount : </h2>
+                <h2 id="Discount12">0</h2>
+            </div>
+            <div class="Final">
+                <h2>Final : </h2>
+                <h2 id="Final-Amount">0</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="container2">
+        <div>
+            <h3>PRODUCT NAME</h3>
+            <div id="product" class="con_2"></div>
+        </div>
+        <div>
+            <h3>PRICE</h3>
+            <div id="price1" class="con_2"></div>
+        </div>
+        <div>
+            <h3>QUANTITY</h3>
+            <div id="quantity1" class="con_2"></div>
+        </div>
+        <div>
+            <h3>TOTAL AMOUNT</h3>
+            <div id="amount1" class="con_2"></div>
+        </div>
+    </div>
+
+    <script>
+        let totalAmount = 0;
+
+        function add() {
+            let a = document.getElementById("productName");
+            let productName = a[a.selectedIndex].innerText;
+
+            let price = document.getElementById("price").value;
+            let quantity = document.getElementById("quantity").value;
+            let amount = document.getElementById("amount").value;
+
+            document.getElementById("product").innerHTML += "<div>" + productName + "</div>";
+            document.getElementById("price1").innerHTML += "<div>" + price + "</div>";
+            document.getElementById("quantity1").innerHTML += "<div>" + quantity + "</div>";
+            document.getElementById("amount1").innerHTML += "<div>" + amount + "</div>";
+
+            document.getElementsByClassName("container2")[0].style.display = "flex";
+
+            totalAmount += parseFloat(amount);
+
+            document.getElementById("price").value = "";
+            document.getElementById("quantity").value = "";
+            document.getElementById("amount").value = "";
+            document.getElementById("productName").value = "";
+
+            document.getElementsByClassName("container3")[0].style.visibility="visible"
+            updateTotals();
+        }
+
+        function Price() {
+            let a = document.getElementById("productName").value;
+            document.getElementById("price").value = a;
+        }
+
+        function ab() {
+            let price = document.getElementById("price").value;
+            let quantity = document.getElementById("quantity").value;
+            let totalAmount = price * quantity;
+
+            document.getElementById("amount").value = totalAmount;
+        }
+
+        function updateTotals() {
+            document.getElementById("Total-Amount").innerText = totalAmount;
+
+            let discount = 0;
+            if (totalAmount > 1000) {
+                discount = totalAmount * 0.10;
+            }
+            document.getElementById("Discount12").innerText = discount;
+
+            let finalAmount = totalAmount - discount;
+            document.getElementById("Final-Amount").innerText = finalAmount;
+        }
+    </script>
+</body>
+
+</html>
